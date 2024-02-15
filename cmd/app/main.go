@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/RubenVillalpando/learning-kafka/internal/kafka"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	kafka.ProduceMessage()
 }
