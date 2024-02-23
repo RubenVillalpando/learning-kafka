@@ -11,24 +11,34 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
-func ProduceMessage() {
+type KafkaClient struct {
+	Client *kgo.Client
+}
 
-	customer := &model.Customer{
-		ID:    0,
-		Name:  "Ruben Villalpando",
-		Email: "rubenvillalpando1299@gmail.com",
-	}
+func New() *KafkaClient {
 	cl, err := kgo.NewClient(
 		kgo.WithLogger(kgo.BasicLogger(os.Stderr, kgo.LogLevelInfo, func() string {
 			return time.Now().Format("[2006-01-02 15:04:05.999] ")
 		})),
 		kgo.ConsumeTopics("consumer-info"),
 		kgo.DefaultProduceTopic("consumer-info"),
+		kgo.SeedBrokers("localhost:9092"),
 	)
 	if err != nil {
 		panic(err)
 	}
-	defer cl.Close()
+	return &KafkaClient{
+		Client: cl,
+	}
+}
+
+func (kc *KafkaClient) ProduceMessage(m *model) {
+
+	customer := &model.Customer{
+		ID:    0,
+		Name:  "Ruben Villalpando",
+		Email: "rubenvillalpando1299@gmail.com",
+	}
 
 	ctx := context.Background()
 
