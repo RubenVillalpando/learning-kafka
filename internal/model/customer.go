@@ -2,35 +2,26 @@ package model
 
 import (
 	"encoding/json"
-	"strconv"
 )
 
 type Customer struct {
-	ID    int
+	ID    string
 	Name  string
 	Email string
-}
-
-type CustomerValue struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Age   int
 }
 
 func (c *Customer) Key() []byte {
-	return []byte(strconv.Itoa(c.ID))
+	return []byte(c.ID)
 }
 
-func (c *Customer) Value() ([]byte, error) {
-	val := &CustomerValue{
-		Name:  c.Name,
-		Email: c.Email,
-	}
+func (c *Customer) Value() []byte {
 
-	jsonBytes, err := json.Marshal(val)
+	jsonBytes, err := json.Marshal(&c)
+
 	if err != nil {
-		return nil, err
+		return []byte{}
 	}
 
-	return jsonBytes, nil
-
+	return jsonBytes
 }

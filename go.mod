@@ -2,7 +2,10 @@ module github.com/RubenVillalpando/learning-kafka
 
 go 1.21.1
 
-require github.com/twmb/franz-go v1.16.1
+require (
+	github.com/google/uuid v1.6.0
+	github.com/twmb/franz-go v1.16.1
+)
 
 require (
 	github.com/klauspost/compress v1.17.4 // indirect
