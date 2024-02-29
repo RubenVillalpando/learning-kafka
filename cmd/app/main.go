@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"github.com/RubenVillalpando/learning-kafka/internal/application"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	app := application.New()
+
+	app.StartKafkaConsumer()
+	app.Serve()
 }
